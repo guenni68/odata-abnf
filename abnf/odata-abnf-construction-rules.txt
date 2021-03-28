@@ -186,7 +186,7 @@ boundOperation = "/" ( boundActionCall
                      )
 
 actionImportCall = actionImport
-boundActionCall  = [ namespace "." ] action
+boundActionCall  = [ namespace ] action
                    ; with the added restriction that the binding parameter MUST be either an entity or collection of entities
                    ; and is specified by reference using the URI immediately preceding (to the left) of the boundActionCall
 
@@ -195,19 +195,19 @@ boundActionCall  = [ namespace "." ] action
 ;  - the binding parameter type MUST match the type of resource identified by the 
 ;    URI immediately preceding (to the left) of the boundXxxFunctionCall, and
 ;  - the functionParameters MUST NOT include the bindingParameter.
-boundEntityFunctionCall       = [ namespace "." ] entityFunction       functionParameters
-boundEntityColFunctionCall    = [ namespace "." ] entityColFunction    functionParameters
-boundComplexFunctionCall      = [ namespace "." ] complexFunction      functionParameters
-boundComplexColFunctionCall   = [ namespace "." ] complexColFunction   functionParameters
-boundPrimitiveFunctionCall    = [ namespace "." ] primitiveFunction    functionParameters
-boundPrimitiveColFunctionCall = [ namespace "." ] primitiveColFunction functionParameters
+boundEntityFunctionCall       = [ namespace ] entityFunction       functionParameters
+boundEntityColFunctionCall    = [ namespace ] entityColFunction    functionParameters
+boundComplexFunctionCall      = [ namespace ] complexFunction      functionParameters
+boundComplexColFunctionCall   = [ namespace ] complexColFunction   functionParameters
+boundPrimitiveFunctionCall    = [ namespace ] primitiveFunction    functionParameters
+boundPrimitiveColFunctionCall = [ namespace ] primitiveColFunction functionParameters
 
-boundFunctionCallNoParens     = [ namespace "." ] entityFunction
-                              / [ namespace "." ] entityColFunction
-                              / [ namespace "." ] complexFunction
-                              / [ namespace "." ] complexColFunction
-                              / [ namespace "." ] primitiveFunction
-                              / [ namespace "." ] primitiveColFunction
+boundFunctionCallNoParens     = [ namespace ] entityFunction
+                              / [ namespace ] entityColFunction
+                              / [ namespace ] complexFunction
+                              / [ namespace ] complexColFunction
+                              / [ namespace ] primitiveFunction
+                              / [ namespace ] primitiveColFunction
 
 entityFunctionImportCall       = entityFunctionImport       functionParameters
 entityColFunctionImportCall    = entityColFunctionImport    functionParameters
@@ -387,12 +387,12 @@ selectOptionPC = filter / search / inlinecount / orderby / skip / top
 selectOption   = selectOptionPC
                / compute / select / aliasAndValue
 
-allOperationsInSchema = namespace "." STAR                 
+allOperationsInSchema = namespace STAR                 
 
 ; The parameterNames uniquely identify the bound function overload
 ; Necessary only if it has overloads
-optionallyQualifiedActionName   = [ namespace "." ] action
-optionallyQualifiedFunctionName = [ namespace "." ] function [ OPEN parameterNames CLOSE ]
+optionallyQualifiedActionName   = [ namespace ] action
+optionallyQualifiedFunctionName = [ namespace ] function [ OPEN parameterNames CLOSE ]
 
 ; The names of all non-binding parameters, separated by commas 
 parameterNames = parameterName *( COMMA parameterName )
@@ -456,8 +456,8 @@ contextPropertyPath = primitiveProperty
                     / complexColProperty
                     / complexProperty [ [ "/" qualifiedComplexTypeName ] "/" contextPropertyPath ]
 
-qualifiedActionName   = namespace "." action
-qualifiedFunctionName = namespace "." function [ OPEN parameterNames CLOSE ]
+qualifiedActionName   = namespace action
+qualifiedFunctionName = namespace function [ OPEN parameterNames CLOSE ]
                 
 complexAnnotationInFragment = annotationInFragment ; complex-valued annotation
 entityAnnotationInFragment  = annotationInFragment ; entity-valued annotation
@@ -529,8 +529,8 @@ annotationExpr = annotationInQuery
                  / primitivePathExpr
                  ]
                  
-annotationInQuery    = AT [ namespace "." ] termName [ HASH annotationQualifier ]
-annotationInFragment = AT [ namespace "." ] termName [ "#"  annotationQualifier ]
+annotationInQuery    = AT [ namespace ] termName [ HASH annotationQualifier ]
+annotationInFragment = AT [ namespace ] termName [ "#"  annotationQualifier ]
 annotationQualifier  = odataIdentifier                
                    
 inscopeVariableExpr  = implicitVariableExpr 
@@ -568,7 +568,7 @@ primitivePathExpr = "/" [ annotationExpr / boundFunctionExpr ]
 boundFunctionExpr = functionExpr ; boundFunction segments can only be composed if the type of the    
                                  ; previous segment matches the type of the first function parameter
                                      
-functionExpr = [ namespace "." ]
+functionExpr = [ namespace ]
                ( entityColFunction    functionExprParameters [ collectionNavigationExpr ] 
                / entityFunction       functionExprParameters [ singleNavigationExpr ] 
                / complexColFunction   functionExprParameters [ complexColPathExpr ]
@@ -771,16 +771,16 @@ singleTypeName = entityTypeName
                / typeDefinitionName 
                / enumerationTypeName                         
                   
-qualifiedEntityTypeName     = namespace "." entityTypeName
-qualifiedComplexTypeName    = namespace "." complexTypeName
-qualifiedTypeDefinitionName = namespace "." typeDefinitionName 
-qualifiedEnumTypeName       = namespace "." enumerationTypeName
+qualifiedEntityTypeName     = namespace entityTypeName
+qualifiedComplexTypeName    = namespace complexTypeName
+qualifiedTypeDefinitionName = namespace typeDefinitionName 
+qualifiedEnumTypeName       = namespace enumerationTypeName
 
-optionallyQualifiedEntityTypeName     = [ namespace "." ] entityTypeName
-optionallyQualifiedComplexTypeName    = [ namespace "." ] complexTypeName
+optionallyQualifiedEntityTypeName     = [ namespace ] entityTypeName
+optionallyQualifiedComplexTypeName    = [ namespace ] complexTypeName
 
 ; an alias is just a single-part namespace
-namespace     = namespacePart *( "." namespacePart )
+namespace     = 1*(namespacePart ".")
 namespacePart = odataIdentifier
 
 entitySetName       = odataIdentifier
@@ -1092,7 +1092,7 @@ includeAnnotationsPreference = [ "odata." ] "include-annotations" EQ-h DQUOTE an
 annotationsList      = annotationIdentifier *("," annotationIdentifier)
 annotationIdentifier = [ excludeOperator ]
                        ( STAR 
-                       / namespace "." ( termName / STAR ) 
+                       / namespace ( termName / STAR ) 
                        ) 
                        [ "#" odataIdentifier ]
 excludeOperator      = "-"

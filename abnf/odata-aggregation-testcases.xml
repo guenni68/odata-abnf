@@ -175,11 +175,13 @@
   </Constraint>
   <Constraint Rule="lambdaVariableExpr">
   </Constraint>
+<!--
   <Constraint Rule="namespacePart">
     <Match>Aggregation</Match>
     <Match>Custom</Match>
     <Match>Self</Match>
   </Constraint>
+-->
   <Constraint Rule="primitiveColFunction">
   </Constraint>
   <Constraint Rule="primitiveColFunctionImport">

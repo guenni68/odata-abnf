@@ -122,9 +122,11 @@
   </Constraint>
   <Constraint Rule="lambdaVariableExpr">
   </Constraint>
+<!--
   <Constraint Rule="namespacePart">
     <Match>Temporal</Match>
   </Constraint>
+-->
   <Constraint Rule="primitiveColFunction">
   </Constraint>
   <Constraint Rule="primitiveColFunctionImport">

@@ -220,6 +220,7 @@
     <Match>lambda</Match>
     <Match>m</Match>
   </Constraint>
+<!--
   <Constraint Rule="namespacePart">
     <Match>Core</Match>
     <Match>Measures</Match>
@@ -230,6 +231,7 @@
     <Match>Sales</Match>
     <Match>Special</Match>
   </Constraint>
+-->
   <Constraint Rule="parameterAlias">
     <Match>@a</Match>
     <Match>@bar</Match>

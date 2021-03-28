@@ -109,7 +109,7 @@ aggregateMethod = %s"sum"
                 / %s"max"
                 / %s"average"
                 / %s"countdistinct"
-                / namespace "." odataIdentifier
+                / namespace odataIdentifier
 
 asAlias         = RWS %s"as" RWS expressionAlias
 expressionAlias = odataIdentifier
@@ -160,7 +160,7 @@ topcountTrafo   = %s"topcount"   OPEN BWS commonExpr BWS COMMA BWS commonExpr BW
 toppercentTrafo = %s"toppercent" OPEN BWS commonExpr BWS COMMA BWS commonExpr BWS CLOSE
 topsumTrafo     = %s"topsum"     OPEN BWS commonExpr BWS COMMA BWS commonExpr BWS CLOSE
 
-customFunction = namespace "." ( entityColFunction / complexColFunction / primitiveColFunction ) functionExprParameters
+customFunction = namespace ( entityColFunction / complexColFunction / primitiveColFunction ) functionExprParameters
 
 
 ;------------------------------------------------------------------------------
